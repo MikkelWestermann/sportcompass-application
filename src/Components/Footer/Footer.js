@@ -3,9 +3,9 @@ import './Footer.css';
 
 const Footer = props => {
   return (
-    <footer>
+    <footer id='footer'>
       <div>Copyright &copy; 2019 Mikkel Theiss Westermann</div>
-      <div className='footerContact'>
+      <div id='footerContact'>
         <p><strong>Contact:</strong></p>
         <a href='https://mikkelwestermann.github.io/Portfolio/'>Mikkel Westermann</a>
         <a href='https://www.linkedin.com/in/mikkel-westermann/'>LinkedIn</a>

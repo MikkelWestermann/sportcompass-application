@@ -6,6 +6,13 @@ import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faRobot, faCartPlus, faShoppingCart, faCashRegister } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faRobot, faCartPlus, faShoppingCart, faCashRegister)
+
+
+
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

@@ -3,6 +3,8 @@ import Navigation from './Components/Navigation';
 import Footer from './Components/Footer/Footer';
 import ItemList from './Components/ItemList';
 import { Spinner, Button, Alert, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Label, Input } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import FloatingButton from './Components/FloatingButton';
 import './App.css';
 
 const base64 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'];
@@ -10,7 +12,7 @@ const manufacturers = ['Robot.ly', 'CRobot', 'burobot', 'sonobot', 'acrobot', 'r
 
 const ActionAlert = (props) => {
   return (
-    <Alert style={{position: 'fixed', zIndex: 1}} color={props.data.type} isOpen={props.visible} toggle={props.dismissAlert}>
+    <Alert style={{position: 'fixed', zIndex: 1, top: 100, left: 0}} color={props.data.type} isOpen={props.visible} toggle={props.dismissAlert}>
       {props.data.message}
     </Alert>
   )
@@ -27,8 +29,8 @@ class App extends Component {
       cart: [],
       visible: false,
       alertData: {
-        message: 'Helloooooooo World!',
-        type: 'success'
+        message: '',
+        type: ''
       }
     }
 
@@ -46,22 +48,22 @@ class App extends Component {
     this.setState({ visible: false })
   }
 
-  showAlert = () => {
-    this.setState({ visible: true }, () => (this.timeout = setTimeout(() => {
+  showAlert = (alertData) => {
+    this.setState({ visible: true, alertData }, () => (this.timeout = setTimeout(() => {
       this.dismissAlert();
-    }, 5000)))
+    }, 3000)))
   }
 
   addToCart = (item) => {
     this.setState(prevState => ({
       cart: [...prevState.cart, item]
-    }))
+    }), () => this.showAlert({ message: 'Item was added to cart', type: 'success' }))
   }
 
   deleteFromCart = (modelNumber) => {
     this.setState({
       cart: this.state.cart.filter(item => item.modelNumber !== modelNumber)
-    })
+    }, () => this.showAlert({ message: 'Item was removed from cart', type: 'success' }))
   }
 
   modelGenerator = () => {
@@ -109,8 +111,14 @@ class App extends Component {
       <div className="App">
         <Navigation toggle={this.toggle} />
         <ActionAlert data={this.state.alertData} visible={this.state.visible} dismissAlert={this.dismissAlert} />
-        <div>
-          <h1 onClick={this.showAlert}>Find Your New Robot!</h1>
+        <div id='productPageHeader'>
+          <div id='bgImage'></div>
+          <div id='productPageHeaderTitle'>
+            <h1 style={{fontSize: '4em'}}>Find Your New Robot!</h1>
+            <h1 style={{fontSize: '3em'}}>TODAY <FontAwesomeIcon icon="robot" /></h1>
+          </div>
+        </div>
+        <div style={{marginTop: 400}} className='customContainer'>
           {
             this.state.items
             &&
@@ -127,6 +135,7 @@ class App extends Component {
             <Button size="lg" style={{marginBottom: 75}} onClick={this.getMoreRobots} color="info">Load More Robots</Button>
           }
         </div>
+        <FloatingButton toggle={this.toggle} />
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Checkout</ModalHeader>
           <ModalBody>
@@ -155,7 +164,7 @@ class App extends Component {
             }
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Continue</Button>{' '}
+            <Button color="primary" onClick={this.toggle}>Continue <FontAwesomeIcon icon="cash-register" /></Button>{' '}
             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>

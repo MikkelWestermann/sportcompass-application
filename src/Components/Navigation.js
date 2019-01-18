@@ -13,6 +13,7 @@ import {
   DropdownItem,
   Button
  } from 'reactstrap';
+ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Navigation extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class Navigation extends Component {
                 </DropdownMenu>
               </UncontrolledDropdown>
               <NavItem>
-                <Button onClick={this.props.toggle} outline color="info">Checkout</Button>
+                <Button onClick={this.props.toggle} outline color="info">Checkout <FontAwesomeIcon icon="shopping-cart" /></Button>
               </NavItem>
             </Nav>
           </Collapse>
