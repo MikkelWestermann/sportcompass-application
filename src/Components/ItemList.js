@@ -1,6 +1,6 @@
 import React from 'react';
 import Item from './Item';
-import { Container, Row, Col } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
 const ItemList = props => {
   return (
@@ -16,6 +16,7 @@ const ItemList = props => {
                 price={item.price}
                 id={i}
                 addToCart={props.addToCart}
+                amount={item.amount}
               />
             </Col>
           )

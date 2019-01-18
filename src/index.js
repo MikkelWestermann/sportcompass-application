@@ -7,9 +7,9 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faRobot, faCartPlus, faShoppingCart, faCashRegister } from '@fortawesome/free-solid-svg-icons'
+import { faRobot, faCartPlus, faShoppingCart, faCashRegister, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faRobot, faCartPlus, faShoppingCart, faCashRegister)
+library.add(faRobot, faCartPlus, faShoppingCart, faCashRegister, faPlus, faMinus)
 
 
 

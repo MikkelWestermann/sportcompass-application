@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Navigation from './Components/Navigation';
 import Footer from './Components/Footer/Footer';
 import ItemList from './Components/ItemList';
-import { Spinner, Button, Alert, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Label, Input } from 'reactstrap';
+import Checkout from './Components/Checkout';
+import { Spinner, Button, Alert } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import FloatingButton from './Components/FloatingButton';
 import './App.css';
@@ -33,8 +34,6 @@ class App extends Component {
         type: ''
       }
     }
-
-    let timeout;
   }
 
   toggle = () => {
@@ -55,6 +54,13 @@ class App extends Component {
   }
 
   addToCart = (item) => {
+    for (let i = 0; i < this.state.cart.length; i++) {
+      if (this.state.cart[i].modelNumber === item.modelNumber) {
+        this.showAlert({ message: 'You already have that robot in your cart', type: 'danger' });
+        return;
+      }
+    }
+
     this.setState(prevState => ({
       cart: [...prevState.cart, item]
     }), () => this.showAlert({ message: 'Item was added to cart', type: 'success' }))
@@ -64,6 +70,37 @@ class App extends Component {
     this.setState({
       cart: this.state.cart.filter(item => item.modelNumber !== modelNumber)
     }, () => this.showAlert({ message: 'Item was removed from cart', type: 'success' }))
+  }
+
+  increaseAmount = (modelNumber) => {
+    let itemIndex;
+    this.state.cart.forEach((robot, i) => {
+      if (robot.modelNumber === modelNumber) {
+        itemIndex = i;
+      }
+    })
+    let items = [...this.state.cart];
+    let item = {...items[itemIndex]};
+    item.amount++;
+    items[itemIndex] = item;
+    this.setState({ cart: items })
+  }
+
+  decreaseAmount = (modelNumber) => {
+    let itemIndex;
+    this.state.cart.forEach((robot, i) => {
+      if (robot.modelNumber === modelNumber) {
+        itemIndex = i;
+      }
+    })
+    let items = [...this.state.cart];
+    let item = {...items[itemIndex]};
+    if (item.amount <= 1) {
+      return;
+    }
+    item.amount--;
+    items[itemIndex] = item;
+    this.setState({ cart: items })
   }
 
   modelGenerator = () => {
@@ -93,7 +130,8 @@ class App extends Component {
             manufacturer: this.getManufacturer(),
             modelNumber: this.modelGenerator(),
             price: this.getPrice(),
-            description: item
+            description: item,
+            amount: 1
           })
         })
         this.setState(prevState => ({
@@ -136,38 +174,7 @@ class App extends Component {
           }
         </div>
         <FloatingButton toggle={this.toggle} />
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Checkout</ModalHeader>
-          <ModalBody>
-            {
-              this.state.cart.length
-              ?
-              <ListGroup>
-                {
-                  this.state.cart.map(item => {
-                    return (
-                      <ListGroupItem key={item.modelNumber} style={{display: 'flex', justifyContent: 'space-between'}}>
-                        <div style={{width: '75%'}}>
-                          <ListGroupItemHeading>{item.manufacturer} {item.modelNumber}</ListGroupItemHeading>
-                          <ListGroupItemText>
-                            Price: {item.price}
-                          </ListGroupItemText>
-                        </div>
-                        <Button color='danger' style={{marginTop: 10}} onClick={() => this.deleteFromCart(item.modelNumber)}>REMOVE</Button>
-                      </ListGroupItem>
-                    )
-                  })
-                }
-              </ListGroup>
-              :
-              <h4>You don't have anything in your cart yet...</h4>
-            }
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Continue <FontAwesomeIcon icon="cash-register" /></Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-          </ModalFooter>
-        </Modal>
+        <Checkout toggle={this.toggle} cart={this.state.cart} modal={this.state.modal} deleteFromCart={this.deleteFromCart} increaseAmount={this.increaseAmount} decreaseAmount={this.decreaseAmount} />
         <Footer />
       </div>
     );
