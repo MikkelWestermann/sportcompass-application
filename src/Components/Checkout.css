@@ -10,12 +10,14 @@
 
 .increaseAmount {
   border-radius: 10px 10px 0 0;
-  border-bottom: 1px solid #ddd;
+  /* border-bottom: 1px solid #ddd; */
+  border-bottom: none;
 }
 
 .decreaseAmount {
   border-radius: 0 0 10px 10px;
-  border-top: 1px solid #ddd;
+  /* border-top: 1px solid #ddd; */
+  border-top: none; 
 }
 
 .increaseAmount:hover {

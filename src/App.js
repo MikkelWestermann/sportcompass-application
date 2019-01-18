@@ -11,9 +11,15 @@ import './App.css';
 const base64 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'];
 const manufacturers = ['Robot.ly', 'CRobot', 'burobot', 'sonobot', 'acrobot', 'roboticc', 'frobotix', 'YouRobot', 'DroBots', 'Robop', 'RoBright', 'iRobot', 'RoBord', 'BuzzBot'];
 
+// Alert component for user feedback
 const ActionAlert = (props) => {
   return (
-    <Alert style={{position: 'fixed', zIndex: 1, top: 100, left: 0}} color={props.data.type} isOpen={props.visible} toggle={props.dismissAlert}>
+    <Alert
+      style={{position: 'fixed', zIndex: 1, top: 100, left: 0}}
+      color={props.data.type}
+      isOpen={props.visible}
+      toggle={props.dismissAlert}
+    >
       {props.data.message}
     </Alert>
   )
@@ -36,6 +42,7 @@ class App extends Component {
     }
   }
 
+  // toggle the Checkout modal
   toggle = () => {
     this.setState({
       modal: !this.state.modal
@@ -54,13 +61,16 @@ class App extends Component {
   }
 
   addToCart = (item) => {
+    // Check if item already exists in cart
     for (let i = 0; i < this.state.cart.length; i++) {
       if (this.state.cart[i].modelNumber === item.modelNumber) {
+        // If it does give user feedback and return
         this.showAlert({ message: 'You already have that robot in your cart', type: 'danger' });
         return;
       }
     }
 
+    // If it doesn't: add it
     this.setState(prevState => ({
       cart: [...prevState.cart, item]
     }), () => this.showAlert({ message: 'Item was added to cart', type: 'success' }))
@@ -103,23 +113,27 @@ class App extends Component {
     this.setState({ cart: items })
   }
 
+  // Generate a random model number for the robot
   modelGenerator = () => {
     let modelNumber = '';
-    const rand = Math.floor(Math.random() * 5) + 3;
+    const rand = Math.floor(Math.random() * 2) + 3;
     for (let i = 0; i < rand; i++) {
       modelNumber += base64[Math.floor(Math.random() * 64)];
     }
     return modelNumber;
   }
 
+  // Select a random manufacturer from the array
   getManufacturer = () => {
     return manufacturers[Math.floor(Math.random() * manufacturers.length)];
   }
 
+  // Set a random price
   getPrice = () => {
     return Math.floor(Math.random() * 500) * 5 + 750
   }
 
+  // calculate Total for the robots in the cart
   calculateTotal = () => {
     const pricePerItems = this.state.cart.map(item => {
       return item.price * item.amount;
@@ -128,6 +142,8 @@ class App extends Component {
     return pricePerItems.reduce((acc, cur) => acc + cur, 0);
   }
 
+  // Load robots (12). Gets 12 lines of bacon ipsum from the json api and then
+  // generate a robot object for each line
   getMoreRobots = () => {
     this.setState({ isPending: true });
     fetch('https://baconipsum.com/api/?type=meat-and-filler&paras=12&start-with-lorem=1')
@@ -154,10 +170,11 @@ class App extends Component {
   }
 
   render() {
+    const { alertData, visible, items, isPending, cart, modal } = this.state;
     return (
       <div className="App">
         <Navigation toggle={this.toggle} />
-        <ActionAlert data={this.state.alertData} visible={this.state.visible} dismissAlert={this.dismissAlert} />
+        <ActionAlert data={alertData} visible={visible} dismissAlert={this.dismissAlert} />
         <div id='productPageHeader'>
           <div id='bgImage'></div>
           <div id='productPageHeaderTitle'>
@@ -167,23 +184,38 @@ class App extends Component {
         </div>
         <div style={{marginTop: 400}} className='customContainer'>
           {
-            this.state.items
+            items
             &&
             <ItemList
-              items={this.state.items}
+              items={items}
               addToCart={this.addToCart}
             />
           }
           {
-            this.state.isPending
+            isPending
             ?
             <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />
             :
-            <Button size="lg" style={{marginBottom: 75}} onClick={this.getMoreRobots} color="info">Load More Robots</Button>
+            <Button
+              size="lg"
+              style={{marginBottom: 75}}
+              onClick={this.getMoreRobots}
+              color="info"
+            >
+              Load More Robots
+            </Button>
           }
         </div>
         <FloatingButton toggle={this.toggle} />
-        <Checkout toggle={this.toggle} cart={this.state.cart} modal={this.state.modal} deleteFromCart={this.deleteFromCart} increaseAmount={this.increaseAmount} decreaseAmount={this.decreaseAmount} total={this.calculateTotal} />
+        <Checkout
+          toggle={this.toggle}
+          cart={cart}
+          modal={modal}
+          deleteFromCart={this.deleteFromCart}
+          increaseAmount={this.increaseAmount}
+          decreaseAmount={this.decreaseAmount}
+          total={this.calculateTotal}
+        />
         <Footer />
       </div>
     );

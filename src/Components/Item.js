@@ -22,20 +22,22 @@ class Item extends Component {
   }
 
   render() {
+    const { imageStatus } = this.state;
+    const { id, manufacturer, modelNumber, description, addToCart } = this.props; 
     return (
       <Card>
         {
-          this.state.imageStatus !== 'error'
+          imageStatus !== 'error'
           &&
           <CardImg top width="100%" height="100%"
-            src={`https://robohash.org/${this.props.id}?size=200x200`}
+            src={`https://robohash.org/${id}?size=200x200`}
             onError={this.handleImageError}
             onLoad={this.handleImageLoaded}
             alt="Card image cap"
           />
         }
         {
-          this.state.imageStatus === 'pending'
+          imageStatus === 'pending'
           &&
           <div>
             <CardImg top width="100%"
@@ -45,7 +47,7 @@ class Item extends Component {
           </div>
         }
         {
-          this.state.imageStatus === 'error'
+          imageStatus === 'error'
           &&
           <div>
             <CardImg top width="100%"
@@ -55,12 +57,12 @@ class Item extends Component {
           </div>
         }
         <CardBody style={{textAlign: 'left'}}>
-          <CardTitle><strong>{this.props.manufacturer} {this.props.modelNumber}</strong></CardTitle>
-          <CardText>{this.props.description}</CardText>
-          <CardText className='text-muted'><strong>Manufacturer: </strong>{this.props.manufacturer}</CardText>
-          <CardText className='text-muted'><strong>Model Number: </strong>{this.props.modelNumber}</CardText>
+          <CardTitle><strong>{manufacturer} {modelNumber}</strong></CardTitle>
+          <CardText>{description}</CardText>
+          <CardText className='text-muted'><strong>Manufacturer: </strong>{manufacturer}</CardText>
+          <CardText className='text-muted'><strong>Model Number: </strong>{modelNumber}</CardText>
           <CardText className='text-muted'><strong>Price: </strong>{this.props.price}</CardText>
-          <Button onClick={() => this.props.addToCart(this.props)} style={{backgroundColor: '#1B998B', border: 'none'}}>Add To Cart <FontAwesomeIcon icon="cart-plus" /></Button>
+          <Button onClick={() => addToCart(this.props)} style={{backgroundColor: '#1B998B', border: 'none'}}>Add To Cart <FontAwesomeIcon icon="cart-plus" /></Button>
         </CardBody>
       </Card>
     )

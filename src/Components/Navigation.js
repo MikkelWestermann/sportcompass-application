@@ -60,7 +60,12 @@ class Navigation extends Component {
                 </DropdownMenu>
               </UncontrolledDropdown>
               <NavItem>
-                <Button onClick={this.props.toggle} outline color="info">Checkout <FontAwesomeIcon icon="shopping-cart" /></Button>
+                <Button
+                  onClick={this.props.toggle}
+                  outline color="info"
+                >
+                  Checkout <FontAwesomeIcon icon="shopping-cart" />
+                </Button>
               </NavItem>
             </Nav>
           </Collapse>
