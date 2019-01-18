@@ -1,0 +1,29 @@
+.changeAmount {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  width: 50px;
+  border: 1px solid #aaa;
+  cursor: pointer;
+}
+
+.increaseAmount {
+  border-radius: 10px 10px 0 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.decreaseAmount {
+  border-radius: 0 0 10px 10px;
+  border-top: 1px solid #ddd;
+}
+
+.increaseAmount:hover {
+  color: #fafaff;
+  background-color: #1B998B;
+}
+
+.decreaseAmount:hover {
+  color: #fafaff;
+  background-color: #eb6565;
+}

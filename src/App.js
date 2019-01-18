@@ -120,6 +120,14 @@ class App extends Component {
     return Math.floor(Math.random() * 500) * 5 + 750
   }
 
+  calculateTotal = () => {
+    const pricePerItems = this.state.cart.map(item => {
+      return item.price * item.amount;
+    })
+
+    return pricePerItems.reduce((acc, cur) => acc + cur, 0);
+  }
+
   getMoreRobots = () => {
     this.setState({ isPending: true });
     fetch('https://baconipsum.com/api/?type=meat-and-filler&paras=12&start-with-lorem=1')
@@ -144,6 +152,7 @@ class App extends Component {
   componentDidMount() {
     this.getMoreRobots();
   }
+
   render() {
     return (
       <div className="App">
@@ -174,7 +183,7 @@ class App extends Component {
           }
         </div>
         <FloatingButton toggle={this.toggle} />
-        <Checkout toggle={this.toggle} cart={this.state.cart} modal={this.state.modal} deleteFromCart={this.deleteFromCart} increaseAmount={this.increaseAmount} decreaseAmount={this.decreaseAmount} />
+        <Checkout toggle={this.toggle} cart={this.state.cart} modal={this.state.modal} deleteFromCart={this.deleteFromCart} increaseAmount={this.increaseAmount} decreaseAmount={this.decreaseAmount} total={this.calculateTotal} />
         <Footer />
       </div>
     );
