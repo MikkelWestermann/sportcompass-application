@@ -19,7 +19,7 @@
   background-position: center;
   background-attachment: fixed;
   filter: blur(4px);
-  background-image: url('./Robots_illustration.jpg');
+  background-image: url('../GraphicalAssets/Robots_illustration.jpg');
   position: absolute;
 }
 

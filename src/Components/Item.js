@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardBody, Button, CardTitle, CardText, CardImg, Spinner } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import question from '../Revision_quetionmark_icon.png';
+import question from '../GraphicalAssets/Revision_quetionmark_icon.png';
 
 class Item extends Component {
   constructor() {
@@ -23,7 +23,7 @@ class Item extends Component {
 
   render() {
     const { imageStatus } = this.state;
-    const { id, manufacturer, modelNumber, description, addToCart } = this.props; 
+    const { id, manufacturer, modelNumber, description, addToCart } = this.props;
     return (
       <Card>
         {
@@ -42,6 +42,7 @@ class Item extends Component {
           <div>
             <CardImg top width="100%"
               src={question}
+              alt={`of the robot ${manufacturer} ${modelNumber}`}
             />
             <Spinner type="grow" color="info" />
           </div>
@@ -52,6 +53,7 @@ class Item extends Component {
           <div>
             <CardImg top width="100%"
               src={question}
+              alt={`of the robot ${manufacturer} ${modelNumber}`}
             />
             <p>Couldn't get image...</p>
           </div>

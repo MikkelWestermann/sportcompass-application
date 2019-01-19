@@ -34,7 +34,7 @@ class Navigation extends Component {
       <div>
         <Navbar color="dark" dark fixed='top' expand="md">
           <NavbarBrand href="/">RoboShop</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
+          <NavbarToggler onClick={this.toggle} aria-label='open navigation' />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
