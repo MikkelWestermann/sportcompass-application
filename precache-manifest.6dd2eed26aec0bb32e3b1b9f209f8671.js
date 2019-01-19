@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "088badf6cfc3d6a9cf34",
-    "url": "/sportcompass-application/static/css/main.1c13ba25.chunk.css"
+    "revision": "d16164e79b544b56000f",
+    "url": "/sportcompass-application/static/css/main.da173b5a.chunk.css"
   },
   {
-    "revision": "088badf6cfc3d6a9cf34",
-    "url": "/sportcompass-application/static/js/main.088badf6.chunk.js"
+    "revision": "d16164e79b544b56000f",
+    "url": "/sportcompass-application/static/js/main.d16164e7.chunk.js"
   },
   {
     "revision": "4188a5ae3e830e43f16c",
@@ -24,7 +24,7 @@ self.__precacheManifest = [
     "url": "/sportcompass-application/static/media/Robots_illustration.6251a8dc.jpg"
   },
   {
-    "revision": "3b1178fce484d49dfa227c7b8281bed6",
+    "revision": "2a2b3bc3d638dc9d850d22d0da64af4e",
     "url": "/sportcompass-application/index.html"
   }
 ];

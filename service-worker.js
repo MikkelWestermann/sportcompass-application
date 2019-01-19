@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/sportcompass-application/precache-manifest.219db9a3250a7859800c81173dae9877.js"
+  "/sportcompass-application/precache-manifest.6dd2eed26aec0bb32e3b1b9f209f8671.js"
 );
 
 workbox.clientsClaim();
